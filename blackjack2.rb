@@ -78,10 +78,14 @@ loop do
 			puts "#{username}, you have the Jack of Spades. You automatically win!"			
 		elsif dealer_hand.include?("SJ")
 			puts "The dealer has the Jack of Spades. The dealer automatically wins!"	
+		elsif player_total > dealer_total && player_total > 21
+			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. Dealer wins. Game Over"
 		elsif player_total > dealer_total 
-			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. Dealer wins. Game Over"			
+			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win. Game Over"	
+		elsif dealer_total > player_total && dealer_total > 21
+			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win. Game Over"			
 		else dealer_total > player_total 
-			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win!"				
+			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. Dealer wins. Game Over."				
 		end	
 
 		puts "Would you like to play again? If yes, hit 1, otherwise, hit 2."
