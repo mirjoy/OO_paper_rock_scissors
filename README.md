@@ -1,2 +1,0 @@
-gotealeaf-calculator
-====================
