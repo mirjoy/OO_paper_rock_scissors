@@ -67,9 +67,8 @@ loop do
 		dealer_total = calculator_total(DECK, dealer_hand)
 		end
 
-		if player_total < dealer_total
-				puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win"	
-		elsif player_total == 21
+		
+		if player_total == 21
 			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win!"	
 		elsif dealer_total == 21
 			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. The dealer wins!"			
