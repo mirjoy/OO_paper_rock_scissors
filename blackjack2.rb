@@ -7,13 +7,12 @@ end
 def calculator_total(deck_hash, playercards)
 	arr = deck_hash.values_at(*playercards)
 	total = 0
-
 	arr.each do|cardvalue|
-		if cardvalue == 'Ace' && total > 10 
-			total+=1
-		elsif cardvalue == 'Ace' && total <= 10 
-			total+=11
-		else 	
+		if cardvalue == 'Ace' && total > 10
+		total+=1
+		elsif cardvalue == 'Ace' && total <= 10
+		total+=11
+		else
 		total+=cardvalue
 		end
 	end
@@ -25,77 +24,77 @@ def hit(hand, cards)
 	hand << deck_arr.pop
 end
 
-loop do
-
-	puts "Welcome to Blackjack"
+puts "Welcome to Blackjack"
 	puts "What is your name? Type it below"
 	username = gets.chomp
 
+loop do
+	
 	player_hand = []
 	dealer_hand = []
-
+	
 	hit(player_hand, DECK)
 	hit(dealer_hand, DECK)
 	hit(player_hand, DECK)
 	hit(dealer_hand, DECK)
-
+	
 	player_total = calculator_total(DECK, player_hand)
 	dealer_total = calculator_total(DECK, dealer_hand)
-	
-			
-	loop do
-		if player_total < 21 && dealer_total < 21
+
+	hitorstay = ''
+
+	while player_total < 21 && dealer_total < 21 do 
 			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. Would you like to hit or stay? To Hit, type 1, to Stay, type 2."
 			hitorstay = gets.chomp
-			if hitorstay == '1' && dealer_total <= 17 && player_total < 21
-				hit(player_hand, DECK)
-				hit(dealer_hand, DECK)
-			elsif hitorstay == '1' && player_total < 21
-				hit(player_hand, DECK)	
-			else hitorstay == '2' && dealer_total <= 17
-				hit(dealer_hand, DECK)
-			end
-		elsif player_total == 21
-				puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win!"
-				break
-		elsif dealer_total == 21
-				puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. The dealer wins!"
-				break
-		elsif player_total == dealer_total
-				puts "It's a draw. You have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}"
-				break
-		elsif player_hand.include?("SJ")
-				puts "#{username}, you have the Jack of Spades. You automatically win!"
-				break
-		elsif dealer_hand.include?("SJ")
-				puts "The dealer has the Jack of Spades. The dealer automatically wins!"	
-				break
-		elsif player_total > dealer_total && player_total > 21
-				puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. Dealer wins. Game Over"
-				break
-		else dealer_total > player_total && dealer_total > 21
-				puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win!"
-				break
-			end	
-
+				if hitorstay == '1' && dealer_total < 17
+					hit(player_hand, DECK)
+					hit(dealer_hand, DECK)
+				elsif hitorstay == '1' && dealer_total >= 17
+						hit(player_hand, DECK)
+				elsif hitorstay == '2' && dealer_total < 17
+					puts "You chose to stay."
+					hit(dealer_hand, DECK)
+					player_total = calculator_total(DECK, player_hand)
+					dealer_total = calculator_total(DECK, dealer_hand)
+					break
+				else hitorstay == '2' && dealer_total >= 17
+					puts "You chose to stay."		
+					player_total = calculator_total(DECK, player_hand)
+					dealer_total = calculator_total(DECK, dealer_hand)
+					break		
+				end
 		player_total = calculator_total(DECK, player_hand)
 		dealer_total = calculator_total(DECK, dealer_hand)
-				
-	end 
-		
-	puts "Would you like to play again? If yes, hit 1, otherwise, hit 2."
-	playagain = gets.chomp
-
-	until playagain == '1' || playagain == '2' do
-		puts "That is not a valid selection. If you would like to play again hit 1, otherwise, hit 2."
-		playagain = gets.chomp
-	end
-
-		if playagain == "1"
-			puts "Great, let's play again"
-		else
-			puts "Bye! Thanks for playing!"
-			break
 		end
 
+		if player_total < dealer_total
+				puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win"	
+		elsif player_total == 21
+			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win!"	
+		elsif dealer_total == 21
+			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. The dealer wins!"			
+		elsif player_total == dealer_total
+			puts "It's a draw. You have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}"			
+		elsif player_hand.include?("SJ")
+			puts "#{username}, you have the Jack of Spades. You automatically win!"			
+		elsif dealer_hand.include?("SJ")
+			puts "The dealer has the Jack of Spades. The dealer automatically wins!"	
+		elsif player_total > dealer_total 
+			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. Dealer wins. Game Over"			
+		else dealer_total > player_total 
+			puts "#{username}, you have #{player_hand} in your deck for a total of #{player_total}. The dealer has #{dealer_hand} for a total of #{dealer_total}. You win!"				
+		end	
+
+		puts "Would you like to play again? If yes, hit 1, otherwise, hit 2."
+		playagain = gets.chomp
+			until playagain == '1' || playagain == '2' do
+			puts "That is not a valid selection. If you would like to play again hit 1, otherwise, hit 2."
+			playagain = gets.chomp
+			end
+		if playagain == "1"
+		puts "Great, let's play again"
+		else
+		puts "Bye! Thanks for playing!"
+		break
+	end
 end
