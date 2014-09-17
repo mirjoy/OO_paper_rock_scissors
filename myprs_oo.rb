@@ -1,7 +1,7 @@
 class Hand
   include Comparable
 
-  attr_reader :name, :value, :choice, :hand
+  attr_reader :name, :choice, :hand
 
   CHOICES = {'P' => 'Paper', 'R' => 'Rock', 'S' => 'Scissors'}
 
@@ -39,6 +39,7 @@ class Player < Hand
     @name = gets.chomp
   end
 
+
   def player_choice
     begin
     puts "#{name}, what do you choose, Paper, Scissors or Rock? [P/R/S]"
@@ -74,7 +75,7 @@ class Game
       puts "It's a tie"  
     elsif human.choice > comp.choice
       puts "#{human.name} wins!"
-      human.display_winning_message
+     human.display_winning_message
     else
       puts "Computer wins"
       comp.display_winning_message
@@ -89,4 +90,8 @@ class Game
 
 end
 
+begin
 game = Game.new.play
+puts "Would you like to play again? If so, type 1. To exit, hit any other key."
+playagain = gets.chomp
+end until playagain != '1'
