@@ -52,7 +52,7 @@ end
 
 class Computer < Hand 
   def initialize
-    @name = "Computer"
+    super("Computer")
   end
 
   def computer_choice
@@ -71,9 +71,9 @@ class Game
   end
 
   def compare_choices
-    if human.choice == comp.choice
+    if human == comp
       puts "It's a tie"  
-    elsif human.choice > comp.choice
+    elsif human > comp
       puts "#{human.name} wins!"
      human.display_winning_message
     else
